@@ -6,6 +6,8 @@ import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import com.example.prompt_diary.BuildConfig
+
 
 class ChatViewModel : ViewModel() {
     // 화면에 보여줄 대답
@@ -14,8 +16,8 @@ class ChatViewModel : ViewModel() {
 
     // Gemini Model 생성(API key)
     private val generativeModel = GenerativeModel(
-        modelName = "gemini-pro",
-        apiKey = "AIzaSyBy6rjjRiN_F2q3JdgHchsOuoDZ0IGV1Ys"
+        modelName = "gemini-1.5-flash",
+        apiKey = BuildConfig.GEMINI_API_KEY
     )
 
     fun sendMessage(userMessage : String) {
