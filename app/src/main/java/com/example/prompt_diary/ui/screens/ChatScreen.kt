@@ -31,6 +31,7 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
     var inputText by remember { mutableStateOf("") }
     val aiResponse by viewModel.chatResponse.collectAsState()
     val scrollState = rememberScrollState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     Column(
         modifier = Modifier
@@ -85,7 +86,15 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("전송하기")
+            if (isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = Color.White,
+                    strokeWidth = 2.dp
+                )
+            } else {
+                Text("전송하기")
+            }
         }
 
 

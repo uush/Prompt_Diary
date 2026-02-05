@@ -22,6 +22,10 @@ class ChatViewModel (application: Application): AndroidViewModel(application) {
     private val _chatResponse = MutableStateFlow("")
     val chatResponse = _chatResponse.asStateFlow()
 
+    // 화면 loading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
     // Gemini Model 생성(API key)
     private val generativeModel = GenerativeModel(
         modelName = "gemini-2.5-flash",
@@ -30,6 +34,7 @@ class ChatViewModel (application: Application): AndroidViewModel(application) {
 
     fun sendMessage(userQuestion : String) {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
                 // 1. RoomDB에서 최신 일기를 읽는다.
                 val latestDiary = diaryDao.getLatestDiaryOneShot()
@@ -58,6 +63,8 @@ class ChatViewModel (application: Application): AndroidViewModel(application) {
 
             }catch (e: Exception) {
                 _chatResponse.value = "🚫에러가 발생 했어요: ${e.localizedMessage}"
+            }finally {
+                _isLoading.value = false
             }
 
         }
