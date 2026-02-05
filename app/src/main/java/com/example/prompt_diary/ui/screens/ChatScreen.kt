@@ -23,9 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.prompt_diary.ui.viewmodel.ChatViewModel
 
 @Composable
-fun ChatScreen(onBack: () -> Unit) {
+fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
     var inputText by remember { mutableStateOf("") }
     var aiResponse by remember { mutableStateOf("여기에 AI 답변이 나타납니다.") }
     val scrollState = rememberScrollState()
@@ -63,7 +64,7 @@ fun ChatScreen(onBack: () -> Unit) {
         OutlinedTextField(
             value = inputText,
             onValueChange = { inputText = it },
-            label = { Text("질문을 입력하세요") },
+            label = { Text("AI와 대화해 보세요💬") },
             modifier = Modifier
                 .fillMaxWidth(),
             singleLine = true
@@ -74,18 +75,14 @@ fun ChatScreen(onBack: () -> Unit) {
         Button(
             onClick = {
                 // 간단한 AI 모방 응답 (실제로는 API 호출)
-                aiResponse = when {
-                    inputText.contains("Hi") -> "안녕하세요! 반갑습니다. 😊"
-                    inputText.contains("climate") -> "오늘 서울 날씨는 맑음입니다!"
-                    inputText.contains("Kotlin") -> "Kotlin Compose 배우시는군요! 좋은 선택입니다."
-                    inputText.isNotBlank() -> "입력하신 '${inputText}'에 대한 답변입니다."
-                    else -> "질문을 입력해주세요!"
-                }
+                viewModel.sendMessage(inputText)
+                aiResponse = viewModel.chatResponse.value
+
                 inputText = ""
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("AI에게 질문하기")
+            Text("전송하기")
         }
     }
 }
