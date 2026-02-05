@@ -19,4 +19,8 @@ interface DiaryDao {
     // main에서 보여 줄 가장 최근 일기 1개 가져오는 함수
     @Query("SELECT * FROM diary_table ORDER BY id DESC LIMIT 1")
     fun getLatestDiary(): Flow<Diary?>
+
+    // 챗봇용
+    @Query("SELECT * FROM diary_table ORDER BY id DESC LIMIT 1")
+    suspend fun getLatestDiaryOneShot(): Diary?
 }
