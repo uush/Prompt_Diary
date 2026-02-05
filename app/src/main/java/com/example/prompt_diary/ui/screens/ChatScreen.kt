@@ -1,16 +1,13 @@
 package com.example.prompt_diary.ui.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -25,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.prompt_diary.ui.viewmodel.ChatViewModel
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
@@ -47,21 +45,35 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
             Text(text="뒤로 가기")
         }
 
+        Spacer(modifier = Modifier.height(12.dp))
+
         // AI 답변 텍스트 뷰
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp),
+                .padding(bottom = 20.dp)
+                .heightIn(min = 100.dp, max = 400.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
+            SelectionContainer {
             if (aiResponse.isNotEmpty()) {
                 Text(
-                    text = if (aiResponse.isBlank()) "안녕하세요! 일기 내용을 바탕으로 대화할 수 있어요. 무엇이든 물어보세요! 😊" else aiResponse,
+                    text = aiResponse,
                     modifier = Modifier.padding(16.dp),
                     fontWeight = FontWeight.Medium,
                     style = MaterialTheme.typography.bodyLarge
                 )
+            } else {
+                Text(
+                    text = "안녕하세요!\n일기 내용을 바탕으로 대화할 수 있어요. 무엇이든 물어보세요! 😊",
+                    modifier = Modifier.padding(16.dp),
+                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
             }
+            }
+
 
         }
 
