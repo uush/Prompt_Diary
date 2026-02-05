@@ -24,7 +24,7 @@ class ChatViewModel (application: Application): AndroidViewModel(application) {
 
     // Gemini Model 생성(API key)
     private val generativeModel = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+        modelName = "gemini-2.5-flash",
         apiKey = BuildConfig.GEMINI_API_KEY
     )
 

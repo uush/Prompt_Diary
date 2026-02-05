@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +29,7 @@ import com.example.prompt_diary.ui.viewmodel.ChatViewModel
 @Composable
 fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
     var inputText by remember { mutableStateOf("") }
-    var aiResponse by remember { mutableStateOf("여기에 AI 답변이 나타납니다.") }
+    val aiResponse by viewModel.chatResponse.collectAsState()
     val scrollState = rememberScrollState()
 
     Column(
@@ -52,12 +53,15 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
                 .padding(bottom = 20.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Text(
-                text = aiResponse,
-                modifier = Modifier.padding(16.dp),
-                fontWeight = FontWeight.Medium,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            if (aiResponse.isNotEmpty()) {
+                Text(
+                    text = if (aiResponse.isBlank()) "안녕하세요! 일기 내용을 바탕으로 대화할 수 있어요. 무엇이든 물어보세요! 😊" else aiResponse,
+                    modifier = Modifier.padding(16.dp),
+                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
         }
 
         // 입력창과 버튼
@@ -76,7 +80,6 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
             onClick = {
                 // 간단한 AI 모방 응답 (실제로는 API 호출)
                 viewModel.sendMessage(inputText)
-                aiResponse = viewModel.chatResponse.value
 
                 inputText = ""
             },
@@ -84,5 +87,7 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
         ) {
             Text("전송하기")
         }
+
+
     }
 }
