@@ -73,4 +73,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     // 위에서 플러그인을 로드했기 때문에 여기서 ksp를 알아듣습니다.
     ksp("androidx.room:room-compiler:$room_version")
+
+    // 구글의 생성형 AI SDK
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 }
