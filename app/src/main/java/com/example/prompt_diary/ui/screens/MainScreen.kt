@@ -50,8 +50,8 @@ fun MainScreen(onWriteDiary: () -> Unit, onOpenChat: () -> Unit, viewModel: Main
             .padding(24.dp)) {
             Text(text = viewModel.todayDate.value, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Text("오늘의 날씨: ☀️ 맑음", style = MaterialTheme.typography.bodyLarge)
-            Spacer(modifier = Modifier.height(32.dp))
-                Card(modifier = Modifier.fillMaxWidth()) {
+            Spacer(modifier = Modifier.height(24.dp))
+                Card(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
