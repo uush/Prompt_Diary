@@ -88,4 +88,9 @@ dependencies {
 
     // 구글의 생성형 AI SDK
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
+    // Retrofit (네트워크 통신 라이브러리)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Gson Converter (JSON을 코틀린 객체로 자동 변환)
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
