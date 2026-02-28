@@ -40,7 +40,7 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
     ) {
         Button(
             onClick = onBack,
-            modifier = Modifier.align(Alignment.Start)
+            modifier = Modifier.align(Alignment.Start).padding(top = 24.dp)
         ) {
             Text(text="뒤로 가기")
         }
@@ -52,8 +52,10 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 20.dp)
-                .heightIn(min = 100.dp, max = 400.dp),
+                .heightIn(min = 100.dp, max = 400.dp)
+                .verticalScroll(rememberScrollState()),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+
         ) {
             SelectionContainer {
             if (aiResponse.isNotEmpty()) {
@@ -93,7 +95,6 @@ fun ChatScreen(onBack: () -> Unit, viewModel: ChatViewModel) {
             onClick = {
                 // 간단한 AI 모방 응답 (실제로는 API 호출)
                 viewModel.sendMessage(inputText)
-
                 inputText = ""
             },
             modifier = Modifier.fillMaxWidth()
