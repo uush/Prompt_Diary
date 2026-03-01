@@ -15,16 +15,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.prompt_diary.ui.viewmodel.MainViewModel
+import com.example.prompt_diary.ui.viewmodel.WeatherViewModel
 
 
 // 메인 화면 : 날씨 + 어제 일기
 @Composable
-fun MainScreen(onWriteDiary: () -> Unit, onOpenChat: () -> Unit, viewModel: MainViewModel) {
+fun MainScreen(onWriteDiary: () -> Unit, onOpenChat: () -> Unit, dateViewModel: MainViewModel, weatherViewModel : WeatherViewModel) {
     // Flow를 Compose 상태로 전환
     // 화면이 켜지면 DB에서 최신 일기를 실시간으로 감시
-    val latestDiaryState = viewModel.latestDiary.collectAsState(initial = null)
+    val latestDiaryState = dateViewModel.latestDiary.collectAsState(initial = null)
     // 데이터 꺼내기
     val diary = latestDiaryState.value
+    val weather = weatherViewModel.weatherState.value
+
 
     Scaffold(
         floatingActionButtonPosition = FabPosition.Center,
@@ -48,8 +51,8 @@ fun MainScreen(onWriteDiary: () -> Unit, onOpenChat: () -> Unit, viewModel: Main
         Column(modifier = Modifier
             .padding(innerPadding)
             .padding(24.dp)) {
-            Text(text = viewModel.todayDate.value, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-            Text("오늘의 날씨: ☀️ 맑음", style = MaterialTheme.typography.bodyLarge)
+            Text(text = dateViewModel.todayDate.value, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+            Text("오늘의 날씨: $weather", style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.height(24.dp))
                 Card(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),) {
                     Column(
