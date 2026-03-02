@@ -8,11 +8,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.prompt_diary.ui.screens.MainScreen
 import com.example.prompt_diary.ui.screens.ChatScreen
 import com.example.prompt_diary.ui.screens.DiaryScreen
+import com.example.prompt_diary.ui.screens.DiaryListScreen
 import com.example.prompt_diary.ui.viewmodel.ChatViewModel
 import com.example.prompt_diary.ui.viewmodel.MainViewModel
 import com.example.prompt_diary.ui.viewmodel.DiaryViewModel
 import com.example.prompt_diary.ui.viewmodel.WeatherViewModel
-
 
 @Composable
 fun AppNavigation() {
@@ -24,10 +24,11 @@ fun AppNavigation() {
     val weatherViewModel : WeatherViewModel = viewModel()
 
 
+
     NavHost(navController = navController, startDestination = "main") {
         composable("main") {
             MainScreen(
-                onWriteDiary = { navController.navigate("diary") },
+                onWriteDiary = { navController.navigate("diaryList") },
                 onOpenChat = { navController.navigate("chat") },
                 dateViewModel = mainViewModel,
                 weatherViewModel = weatherViewModel
@@ -39,8 +40,13 @@ fun AppNavigation() {
                 viewModel = chatViewModel
             )
         }
-
-        composable("diary") {
+        composable("diaryList"){
+            DiaryListScreen(
+                onBack = { navController.popBackStack() },
+                diaryViewModel = diaryViewModel
+            )
+        }
+        composable("editDiary") {
             DiaryScreen(
                 onBack = { navController.popBackStack() },
                 viewModel = diaryViewModel

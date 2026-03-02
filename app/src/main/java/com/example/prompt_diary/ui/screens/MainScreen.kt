@@ -37,7 +37,7 @@ fun MainScreen(onWriteDiary: () -> Unit, onOpenChat: () -> Unit, dateViewModel: 
                     onClick = onWriteDiary,
                     modifier = Modifier.align(Alignment.BottomStart)
                 ) {
-                    Icon(Icons.Default.Edit, contentDescription = "일기 쓰기")
+                    Icon(Icons.Default.Edit, contentDescription = "일기장")
                 }
                 FloatingActionButton(
                     onClick = onOpenChat,
