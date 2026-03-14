@@ -27,4 +27,11 @@ class DiaryViewModel (application: Application) : AndroidViewModel(application){
             diaryDao.insertDiary(newDiary) // 저장 완료
         }
     }
+
+    // 일기 삭제
+    fun deleteDiary(diary: Diary){
+        viewModelScope.launch {
+            diaryDao.deleteDiary(diary)
+        }
+    }
 }
